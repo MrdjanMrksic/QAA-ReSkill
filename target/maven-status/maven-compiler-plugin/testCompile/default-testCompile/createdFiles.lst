@@ -1,0 +1,7 @@
+common\GsonFunctions.class
+common\RestAssuredFunctions.class
+test\common\TestBase.class
+calls\CrocodileAPI.class
+data\models\LoginRequest.class
+data\models\LoginResponse.class
+test\suites\CrocodileTests.class
