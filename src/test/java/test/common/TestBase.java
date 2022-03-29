@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeClass;
 public class TestBase {
 
     public String accessToken;
-    public int crocodileID;
+    public int crocodileId;
 
     public CrocodileRequest crocodileRequest = new CrocodileRequest(
             "Mrdjan",
@@ -43,6 +43,7 @@ public class TestBase {
         createCrocodileResponse = CrocodileAPI.createCrocodileResponse(accessToken, crocodileRequest);
 
         //get crocodileID for tests
-        crocodileID = createCrocodileResponse.getId();
+        crocodileId = createCrocodileResponse.getId();
     }
+
 }

@@ -25,19 +25,19 @@ public class CrocodileAPI {
         return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.post("my/crocodiles/", accessToken, crocodileRequest), CrocodileResponse.class);
     }
 
-    public static CrocodileResponse getCrocodileByID (String accessToken, int ID){
-        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.get("my/crocodiles/"+ID, accessToken), CrocodileResponse.class);
+    public static CrocodileResponse getCrocodileById(String accessToken, int id){
+        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.get("my/crocodiles/"+id, accessToken), CrocodileResponse.class);
     }
 
-    public static CrocodileResponse putCrocodileByID (String accessToken, int ID, CrocodileRequest crocodileRequest){
-        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.put("my/crocodiles/"+ID+"/", accessToken, crocodileRequest), CrocodileResponse.class);
+    public static CrocodileResponse putCrocodileById(String accessToken, int id, CrocodileRequest crocodileRequest){
+        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.put("my/crocodiles/"+id+"/", accessToken, crocodileRequest), CrocodileResponse.class);
     }
 
-    public static CrocodileResponse patchCrocodileByID (String accessToken, int ID, CrocodileRequest crocodileRequest){
-        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.patch("my/crocodiles/"+ID+"/", accessToken, crocodileRequest), CrocodileResponse.class);
+    public static CrocodileResponse patchCrocodileById(String accessToken, int id, CrocodileRequest crocodileRequest){
+        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.patch("my/crocodiles/"+id+"/", accessToken, crocodileRequest), CrocodileResponse.class);
     }
 
-    public static CrocodileResponse deleteCrocodileByID (String accessToken, int ID){
-        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.delete("my/crocodiles/"+ID+"/", accessToken), CrocodileResponse.class);
+    public static CrocodileResponse deleteCrocodileById (String accessToken, int id){
+        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.delete("my/crocodiles/"+id+"/", accessToken), CrocodileResponse.class);
     }
 }
