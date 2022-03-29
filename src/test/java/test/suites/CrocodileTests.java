@@ -2,6 +2,7 @@ package test.suites;
 
 import calls.CrocodileAPI;
 import data.models.common.CrocodileResponse;
+import data.models.common.EmptyResponse;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -84,9 +85,11 @@ public class CrocodileTests extends TestBase {
     @Test(dependsOnGroups = "priority")
     @Description("Test deleting a private crocodiles by ID and assert that response is null and crocodile is successfully deleted")
     public void deleteMyCrocodileByIDTest(){
-        CrocodileResponse deleteMyCrocodileByIDResponse = CrocodileAPI.deleteCrocodileById(accessToken, crocodileId);
+        EmptyResponse deleteMyCrocodileByIDResponse = CrocodileAPI.deleteCrocodileById(accessToken, crocodileId);
+        CrocodileResponse[] getMyCrocodileResponse = CrocodileAPI.getMyCrocodilesResponse(accessToken);
 
         Assert.assertNull(deleteMyCrocodileByIDResponse);
+        crocodileAsserts.assertSuccessfullDelete(crocodileId, getMyCrocodileResponse);
     }
 
 }

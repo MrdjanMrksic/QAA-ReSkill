@@ -6,6 +6,7 @@ import data.models.common.CrocodileRequest;
 import data.models.common.CrocodileResponse;
 import data.models.authentication.LoginRequest;
 import data.models.authentication.LoginResponse;
+import data.models.common.EmptyResponse;
 
 public class CrocodileAPI {
 
@@ -37,7 +38,7 @@ public class CrocodileAPI {
         return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.patch("my/crocodiles/"+id+"/", accessToken, crocodileRequest), CrocodileResponse.class);
     }
 
-    public static CrocodileResponse deleteCrocodileById (String accessToken, int id){
-        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.delete("my/crocodiles/"+id+"/", accessToken), CrocodileResponse.class);
+    public static EmptyResponse deleteCrocodileById (String accessToken, int id){
+        return GsonFunctions.parseSuccessResponseToModel(RestAssuredFunctions.delete("my/crocodiles/"+id+"/", accessToken), EmptyResponse.class);
     }
 }

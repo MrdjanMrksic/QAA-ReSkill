@@ -17,15 +17,20 @@ public class CrocodileAsserts {
     }
 
     public void assertListOfCrocodiles(CrocodileResponse[] getPublicCrocodileResponse) {
-        for(int i = 0; i < getPublicCrocodileResponse.length; i++) {
+        for (int i = 0; i < getPublicCrocodileResponse.length; i++) {
             softAssert.assertFalse(getPublicCrocodileResponse[i].getName().isEmpty(), "Name is not empty");
             softAssert.assertFalse(getPublicCrocodileResponse[i].getDateOfBirth().isEmpty(), "Date of birth is not empty");
             softAssert.assertFalse(getPublicCrocodileResponse[i].getSex().isEmpty(), "Sex is not empty");
             softAssert.assertTrue(getPublicCrocodileResponse[i].getAge() == HelperFunctions.calculateAge(getPublicCrocodileResponse[i].getDateOfBirth()),
-                    "Age is not empty");
+                    "Age is empty");
         }
         softAssert.assertAll();
     }
 
-
+    public void assertSuccessfullDelete(int crocodileId, CrocodileResponse[] getPublicCrocodileResponse) {
+        for (int i = 0; i < getPublicCrocodileResponse.length; i++) {
+            softAssert.assertFalse(getPublicCrocodileResponse[i].getId() == crocodileId, "Delete was not successfull.");
+        }
+        softAssert.assertAll();
+    }
 }
