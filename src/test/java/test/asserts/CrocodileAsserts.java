@@ -19,6 +19,12 @@ public class CrocodileAsserts {
         for(int i = 0; i < getPublicCrocodileResponse.length; i++) {
             softAssert.assertFalse(getPublicCrocodileResponse[i].getName().isEmpty(), "Name is not empty");
         }
+        for(int i = 0; i < getPublicCrocodileResponse.length; i++) {
+            softAssert.assertFalse(getPublicCrocodileResponse[i].getDateOfBirth().isEmpty(), "Date of birth is not empty");
+        }
+        for(int i = 0; i < getPublicCrocodileResponse.length; i++) {
+            softAssert.assertFalse(getPublicCrocodileResponse[i].getSex().isEmpty(), "Sex is not empty");
+        }
         softAssert.assertAll();
     }
 
