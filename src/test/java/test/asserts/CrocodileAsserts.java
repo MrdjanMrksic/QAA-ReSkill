@@ -1,5 +1,6 @@
 package test.asserts;
 
+import common.HelperFunctions;
 import data.models.common.CrocodileRequest;
 import data.models.common.CrocodileResponse;
 import org.testng.asserts.SoftAssert;
@@ -18,12 +19,10 @@ public class CrocodileAsserts {
     public void assertListOfCrocodiles(CrocodileResponse[] getPublicCrocodileResponse) {
         for(int i = 0; i < getPublicCrocodileResponse.length; i++) {
             softAssert.assertFalse(getPublicCrocodileResponse[i].getName().isEmpty(), "Name is not empty");
-        }
-        for(int i = 0; i < getPublicCrocodileResponse.length; i++) {
             softAssert.assertFalse(getPublicCrocodileResponse[i].getDateOfBirth().isEmpty(), "Date of birth is not empty");
-        }
-        for(int i = 0; i < getPublicCrocodileResponse.length; i++) {
             softAssert.assertFalse(getPublicCrocodileResponse[i].getSex().isEmpty(), "Sex is not empty");
+            softAssert.assertTrue(getPublicCrocodileResponse[i].getAge() == HelperFunctions.calculateAge(getPublicCrocodileResponse[i].getDateOfBirth()),
+                    "Age is not empty");
         }
         softAssert.assertAll();
     }
