@@ -1,15 +1,41 @@
 package test.suites;
 
 import calls.CrocodileAPI;
+import data.models.common.CrocodileRequest;
 import data.models.common.CrocodileResponse;
 import data.models.common.EmptyResponse;
+import data.provider.CrocodileProvider;
 import jdk.jfr.Description;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import test.asserts.CrocodileAsserts;
 import test.common.TestBase;
 
 public class CrocodileTests extends TestBase {
+
+    CrocodileRequest postCrocodileRequest;
+    CrocodileRequest putCrocodileRequest;
+    CrocodileRequest patchCrocodileRequest;
+    CrocodileResponse crocodileResponse;
+    public int crocodileId;
+
+    @BeforeClass
+    public void prepareTestData(){
+        //prepare crocodile
+        postCrocodileRequest = CrocodileProvider.preparePostCrocodileRequest();
+
+        //create crocodile for tests
+        crocodileResponse = CrocodileAPI.createCrocodileResponse(accessToken, postCrocodileRequest);
+
+        //get crocodileID for tests
+        crocodileId = crocodileResponse.getId();
+
+        //prepare crocodile for put request
+        putCrocodileRequest = CrocodileProvider.preparePutCrocodileRequest();
+
+        patchCrocodileRequest = postCrocodileRequest;
+    }
 
 
     public CrocodileAsserts crocodileAsserts = new CrocodileAsserts();
@@ -24,7 +50,7 @@ public class CrocodileTests extends TestBase {
     @Description("Test create crocodile functionality and assert that crocodile is created")
     public void createCrocodileTest(){
         Assert.assertNotNull(crocodileId, "Crocodile has not been created successfully");
-        crocodileAsserts.assertCrocodileResponse(createCrocodileResponse, crocodileRequest);
+        crocodileAsserts.assertCrocodileResponse(crocodileResponse, postCrocodileRequest);
     }
 
     @Test(groups = "priority")
@@ -48,7 +74,7 @@ public class CrocodileTests extends TestBase {
     public void getMyCrocodileByIDTest(){
         CrocodileResponse getMyCrocodileByIDResponse = CrocodileAPI.getCrocodileById(accessToken, crocodileId);
 
-        crocodileAsserts.assertCrocodileResponse(getMyCrocodileByIDResponse, crocodileRequest);
+        crocodileAsserts.assertCrocodileResponse(getMyCrocodileByIDResponse, postCrocodileRequest);
     }
 
     @Test(groups = "priority")
