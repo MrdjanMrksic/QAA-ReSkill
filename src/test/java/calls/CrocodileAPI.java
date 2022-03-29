@@ -2,11 +2,10 @@ package calls;
 
 import common.GsonFunctions;
 import common.RestAssuredFunctions;
-import data.models.CrocodileRequest;
-import data.models.CrocodileResponse;
-import data.models.LoginRequest;
-import data.models.LoginResponse;
-import io.restassured.response.Response;
+import data.models.common.CrocodileRequest;
+import data.models.common.CrocodileResponse;
+import data.models.authentication.LoginRequest;
+import data.models.authentication.LoginResponse;
 
 public class CrocodileAPI {
 

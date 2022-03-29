@@ -1,7 +1,7 @@
 package test.suites;
 
 import calls.CrocodileAPI;
-import data.models.CrocodileResponse;
+import data.models.common.CrocodileResponse;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -23,7 +23,7 @@ public class CrocodileTests extends TestBase {
     @Description("Test create crocodile functionality and assert that crocodile is created")
     public void createCrocodileTest(){
         Assert.assertNotNull(crocodileID, "Crocodile has not been created successfully");
-        crocodileAsserts.assertResponseRequestEquality(createCrocodileResponse, crocodileRequest);
+        crocodileAsserts.assertCrocodileResponse(createCrocodileResponse, crocodileRequest);
     }
 
     @Test(groups = "priority")
@@ -47,14 +47,14 @@ public class CrocodileTests extends TestBase {
     public void getMyCrocodileByIDTest(){
         CrocodileResponse getMyCrocodileByIDResponse = CrocodileAPI.getCrocodileByID(accessToken, crocodileID);
 
-        crocodileAsserts.assertResponseRequestEquality(getMyCrocodileByIDResponse, crocodileRequest);
+        crocodileAsserts.assertCrocodileResponse(getMyCrocodileByIDResponse, crocodileRequest);
     }
 
     @Test(groups = "priority")
     @Description("Test editing a private crocodiles by ID and assert that response is same as the request")
     public void putMyCrocodileByIDTest(){
         CrocodileResponse putMyCrocodileByIDResponse = CrocodileAPI.putCrocodileByID(accessToken, crocodileID, putCrocodileRequest);
-        crocodileAsserts.assertResponseRequestEquality(putMyCrocodileByIDResponse, putCrocodileRequest);
+        crocodileAsserts.assertCrocodileResponse(putMyCrocodileByIDResponse, putCrocodileRequest);
     }
 
     @Test(groups = "priority")

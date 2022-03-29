@@ -1,14 +1,14 @@
 package test.asserts;
 
-import data.models.CrocodileRequest;
-import data.models.CrocodileResponse;
+import data.models.common.CrocodileRequest;
+import data.models.common.CrocodileResponse;
 import org.testng.asserts.SoftAssert;
 
 public class CrocodileAsserts {
 
     public SoftAssert softAssert = new SoftAssert();
 
-    public void assertResponseRequestEquality(CrocodileResponse crocodileResponse, CrocodileRequest crocodileRequest) {
+    public void assertCrocodileResponse(CrocodileResponse crocodileResponse, CrocodileRequest crocodileRequest) {
         softAssert.assertEquals(crocodileResponse.getName(), crocodileRequest.getName(), "Name didn't match");
         softAssert.assertEquals(crocodileResponse.getDateOfBirth(), crocodileRequest.getDateOfBirth(), "date of birth didn't match");
         softAssert.assertEquals(crocodileResponse.getSex(), crocodileRequest.getSex(), "Sex didn't match");

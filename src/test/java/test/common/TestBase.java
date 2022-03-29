@@ -1,9 +1,9 @@
 package test.common;
 
 import calls.CrocodileAPI;
-import data.models.CrocodileResponse;
-import data.models.LoginRequest;
-import data.models.CrocodileRequest;
+import data.models.common.CrocodileResponse;
+import data.models.authentication.LoginRequest;
+import data.models.common.CrocodileRequest;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 
