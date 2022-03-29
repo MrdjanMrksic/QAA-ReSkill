@@ -26,7 +26,6 @@ public class TestBase {
     );
 
     public CrocodileRequest patchCrocodileRequest = new CrocodileRequest(
-            "MrdjanPatch"
     );
 
     public CrocodileResponse createCrocodileResponse = new CrocodileResponse();

@@ -59,9 +59,26 @@ public class CrocodileTests extends TestBase {
 
     @Test(groups = "priority")
     @Description("Test patching a private crocodiles by ID and assert that changed field is the same in response as is in request")
-    public void patchMyCrocodileByIDTest(){
+    public void patchMyCrocodileNameByIDTest(){
+        patchCrocodileRequest.setName("MrdjanPatch");
         CrocodileResponse patchMyCrocodileByIDResponse = CrocodileAPI.patchCrocodileById(accessToken, crocodileId, patchCrocodileRequest);
         Assert.assertEquals(patchMyCrocodileByIDResponse.getName(), patchCrocodileRequest.getName());
+    }
+
+    @Test(groups = "priority")
+    @Description("Test patching a private crocodiles by ID and assert that changed field is the same in response as is in request")
+    public void patchMyCrocodileDateByIDTest(){
+        patchCrocodileRequest.setDateOfBirth("1992-03-20");
+        CrocodileResponse patchMyCrocodileByIDResponse = CrocodileAPI.patchCrocodileById(accessToken, crocodileId, patchCrocodileRequest);
+        Assert.assertEquals(patchMyCrocodileByIDResponse.getDateOfBirth(), patchCrocodileRequest.getDateOfBirth());
+    }
+
+    @Test(groups = "priority")
+    @Description("Test patching a private crocodiles by ID and assert that changed field is the same in response as is in request")
+    public void patchMyCrocodileSexByIDTest(){
+        patchCrocodileRequest.setSex("M");
+        CrocodileResponse patchMyCrocodileByIDResponse = CrocodileAPI.patchCrocodileById(accessToken, crocodileId, patchCrocodileRequest);
+        Assert.assertEquals(patchMyCrocodileByIDResponse.getSex(), patchCrocodileRequest.getSex());
     }
 
     @Test(dependsOnGroups = "priority")
