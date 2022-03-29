@@ -4,6 +4,7 @@ import calls.CrocodileAPI;
 import data.models.common.CrocodileResponse;
 import data.models.authentication.LoginRequest;
 import data.models.common.CrocodileRequest;
+import environment.ConfigSetup;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 
@@ -33,10 +34,10 @@ public class TestBase {
     @BeforeClass
     public void beforeClass() {
         //set baseURI for tests
-        RestAssured.baseURI = "https://test-api.k6.io/";
+        RestAssured.baseURI = ConfigSetup.getBaseUrl();
 
         //create access token for tests
-        accessToken = CrocodileAPI.login(new LoginRequest("MrdjanMrksic", "Tester123!")).getAccess();
+        accessToken = CrocodileAPI.login(new LoginRequest(ConfigSetup.getUser(), ConfigSetup.getPassword())).getAccess();
 
         //create crocodile for tests
         createCrocodileResponse = CrocodileAPI.createCrocodileResponse(accessToken, crocodileRequest);
