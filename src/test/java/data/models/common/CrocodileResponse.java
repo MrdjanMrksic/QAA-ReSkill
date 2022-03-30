@@ -1,12 +1,15 @@
-package data.models;
+package data.models.common;
 
-import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CrocodileRequest implements Serializable
-{
+import java.io.Serializable;
 
+public class CrocodileResponse implements Serializable {
+
+    @SerializedName("id")
+    @Expose
+    private Integer id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -16,21 +19,29 @@ public class CrocodileRequest implements Serializable
     @SerializedName("date_of_birth")
     @Expose
     private String dateOfBirth;
-    private final static long serialVersionUID = -976650914674967403L;
+    @SerializedName("age")
+    @Expose
+    private Integer age;
+    private final static long serialVersionUID = 7838727261731306498L;
 
-    public CrocodileRequest() {
+    public CrocodileResponse() {
     }
 
-    public CrocodileRequest(String name) {
+    public CrocodileResponse(Integer id, String name, String sex, String dateOfBirth, Integer age) {
         super();
-        this.name = name;
-    }
-
-    public CrocodileRequest(String name, String sex, String dateOfBirth) {
-        super();
+        this.id = id;
         this.name = name;
         this.sex = sex;
         this.dateOfBirth = dateOfBirth;
+        this.age = age;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,6 +66,14 @@ public class CrocodileRequest implements Serializable
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
 }

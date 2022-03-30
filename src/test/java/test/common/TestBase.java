@@ -1,48 +1,24 @@
 package test.common;
 
 import calls.CrocodileAPI;
-import data.models.CrocodileResponse;
-import data.models.LoginRequest;
-import data.models.CrocodileRequest;
+import data.models.common.CrocodileResponse;
+import data.models.authentication.LoginRequest;
+import data.models.common.CrocodileRequest;
+import environment.ConfigSetup;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 
 public class TestBase {
 
     public String accessToken;
-    public int crocodileID;
-
-    public CrocodileRequest crocodileRequest = new CrocodileRequest(
-            "Mrdjan",
-            "M",
-            "2012-12-12"
-    );
-
-    public CrocodileRequest putCrocodileRequest = new CrocodileRequest(
-            "MrdjanPut",
-            "F",
-            "2015-12-12"
-
-    );
-
-    public CrocodileRequest patchCrocodileRequest = new CrocodileRequest(
-            "MrdjanPatch"
-    );
-
-    public CrocodileResponse createCrocodileResponse = new CrocodileResponse();
 
     @BeforeClass
     public void beforeClass() {
         //set baseURI for tests
-        RestAssured.baseURI = "https://test-api.k6.io/";
+        RestAssured.baseURI = ConfigSetup.getBaseUrl();
 
         //create access token for tests
-        accessToken = CrocodileAPI.login(new LoginRequest("MrdjanMrksic", "Tester123!")).getAccess();
-
-        //create crocodile for tests
-        createCrocodileResponse = CrocodileAPI.createCrocodileResponse(accessToken, crocodileRequest);
-
-        //get crocodileID for tests
-        crocodileID = createCrocodileResponse.getId();
+        accessToken = CrocodileAPI.login(new LoginRequest(ConfigSetup.getUser(), ConfigSetup.getPassword())).getAccess();
     }
+
 }

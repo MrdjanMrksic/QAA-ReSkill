@@ -1,14 +1,41 @@
 package test.suites;
 
 import calls.CrocodileAPI;
-import data.models.CrocodileResponse;
+import data.models.common.CrocodileRequest;
+import data.models.common.CrocodileResponse;
+import data.models.common.EmptyResponse;
+import data.provider.CrocodileProvider;
 import jdk.jfr.Description;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import test.asserts.CrocodileAsserts;
 import test.common.TestBase;
 
 public class CrocodileTests extends TestBase {
+
+    CrocodileRequest postCrocodileRequest;
+    CrocodileRequest putCrocodileRequest;
+    CrocodileRequest patchCrocodileRequest;
+    CrocodileResponse crocodileResponse;
+    public int crocodileId;
+
+    @BeforeClass
+    public void prepareTestData(){
+        //prepare crocodile
+        postCrocodileRequest = CrocodileProvider.preparePostCrocodileRequest();
+
+        //create crocodile for tests
+        crocodileResponse = CrocodileAPI.createCrocodileResponse(accessToken, postCrocodileRequest);
+
+        //get crocodileID for tests
+        crocodileId = crocodileResponse.getId();
+
+        //prepare crocodile for put request
+        putCrocodileRequest = CrocodileProvider.preparePutCrocodileRequest();
+
+        patchCrocodileRequest = postCrocodileRequest;
+    }
 
 
     public CrocodileAsserts crocodileAsserts = new CrocodileAsserts();
@@ -22,8 +49,8 @@ public class CrocodileTests extends TestBase {
     @Test(groups = "priority")
     @Description("Test create crocodile functionality and assert that crocodile is created")
     public void createCrocodileTest(){
-        Assert.assertNotNull(crocodileID, "Crocodile has not been created successfully");
-        crocodileAsserts.assertResponseRequestEquality(createCrocodileResponse, crocodileRequest);
+        Assert.assertNotNull(crocodileId, "Crocodile has not been created successfully");
+        crocodileAsserts.assertCrocodileResponse(crocodileResponse, postCrocodileRequest);
     }
 
     @Test(groups = "priority")
@@ -45,31 +72,50 @@ public class CrocodileTests extends TestBase {
     @Test(groups = "priority")
     @Description("Test getting a private crocodiles by ID and assert that response is same as the request")
     public void getMyCrocodileByIDTest(){
-        CrocodileResponse getMyCrocodileByIDResponse = CrocodileAPI.getCrocodileByID(accessToken, crocodileID);
+        CrocodileResponse getMyCrocodileByIDResponse = CrocodileAPI.getCrocodileById(accessToken, crocodileId);
 
-        crocodileAsserts.assertResponseRequestEquality(getMyCrocodileByIDResponse, crocodileRequest);
+        crocodileAsserts.assertCrocodileResponse(getMyCrocodileByIDResponse, postCrocodileRequest);
     }
 
     @Test(groups = "priority")
     @Description("Test editing a private crocodiles by ID and assert that response is same as the request")
     public void putMyCrocodileByIDTest(){
-        CrocodileResponse putMyCrocodileByIDResponse = CrocodileAPI.putCrocodileByID(accessToken, crocodileID, putCrocodileRequest);
-        crocodileAsserts.assertResponseRequestEquality(putMyCrocodileByIDResponse, putCrocodileRequest);
+        CrocodileResponse putMyCrocodileByIDResponse = CrocodileAPI.putCrocodileById(accessToken, crocodileId, putCrocodileRequest);
+        crocodileAsserts.assertCrocodileResponse(putMyCrocodileByIDResponse, putCrocodileRequest);
     }
 
     @Test(groups = "priority")
     @Description("Test patching a private crocodiles by ID and assert that changed field is the same in response as is in request")
-    public void patchMyCrocodileByIDTest(){
-        CrocodileResponse patchMyCrocodileByIDResponse = CrocodileAPI.patchCrocodileByID(accessToken, crocodileID, patchCrocodileRequest);
+    public void patchMyCrocodileNameByIDTest(){
+        patchCrocodileRequest.setName("MrdjanPatch");
+        CrocodileResponse patchMyCrocodileByIDResponse = CrocodileAPI.patchCrocodileById(accessToken, crocodileId, patchCrocodileRequest);
         Assert.assertEquals(patchMyCrocodileByIDResponse.getName(), patchCrocodileRequest.getName());
+    }
+
+    @Test(groups = "priority")
+    @Description("Test patching a private crocodiles by ID and assert that changed field is the same in response as is in request")
+    public void patchMyCrocodileDateByIDTest(){
+        patchCrocodileRequest.setDateOfBirth("1992-03-20");
+        CrocodileResponse patchMyCrocodileByIDResponse = CrocodileAPI.patchCrocodileById(accessToken, crocodileId, patchCrocodileRequest);
+        Assert.assertEquals(patchMyCrocodileByIDResponse.getDateOfBirth(), patchCrocodileRequest.getDateOfBirth());
+    }
+
+    @Test(groups = "priority")
+    @Description("Test patching a private crocodiles by ID and assert that changed field is the same in response as is in request")
+    public void patchMyCrocodileSexByIDTest(){
+        patchCrocodileRequest.setSex("M");
+        CrocodileResponse patchMyCrocodileByIDResponse = CrocodileAPI.patchCrocodileById(accessToken, crocodileId, patchCrocodileRequest);
+        Assert.assertEquals(patchMyCrocodileByIDResponse.getSex(), patchCrocodileRequest.getSex());
     }
 
     @Test(dependsOnGroups = "priority")
     @Description("Test deleting a private crocodiles by ID and assert that response is null and crocodile is successfully deleted")
     public void deleteMyCrocodileByIDTest(){
-        CrocodileResponse deleteMyCrocodileByIDResponse = CrocodileAPI.deleteCrocodileByID(accessToken, crocodileID);
+        EmptyResponse deleteMyCrocodileByIDResponse = CrocodileAPI.deleteCrocodileById(accessToken, crocodileId);
+        CrocodileResponse[] getMyCrocodileResponse = CrocodileAPI.getMyCrocodilesResponse(accessToken);
 
         Assert.assertNull(deleteMyCrocodileByIDResponse);
+        crocodileAsserts.assertSuccessfullDelete(crocodileId, getMyCrocodileResponse);
     }
 
 }
